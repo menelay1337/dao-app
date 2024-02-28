@@ -76,12 +76,17 @@ contract Dao {
     }
 
     function createProposal(string memory _desc, string[] memory _roles) public {
+		require(msg.sender == director, "Not enough permission to create proposal");
         proposals.push(Proposal({desc: _desc, votefor: 0, voteagainst: 0, executed: false, roles: _roles}));
         emit ProposalCreated(proposals.length - 1, _desc, _roles);
     }
 
+	function getProposals() public view returns(Proposal[] memory) {
+		return proposals;
+	}
+
     function votefor(uint _proposalId) public {
-        require(Tokens.getEmployeeAddress(msg.sender) == msg.sender, "Only members can vote");
+        require(Tokens.getEmployeeAddress(msg.sender) == msg.sender, "Only stuff can vote");
         require(votes[msg.sender][_proposalId] == false, "You have already voted for this proposal");
 		require(isSuitable(msg.sender, _proposalId), "You're not pertmitted to vote.");
         votes[msg.sender][_proposalId] = true;

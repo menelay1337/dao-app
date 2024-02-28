@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { RemoveStuffButton } from "./buttons/RemoveStuffButton";
 import { AddStuffButton } from "./buttons/AddStuffButton";
-import DaoArtifact from "../contracts/Dao.json";
+import { CreateProposalButton } from "./buttons/CreateProposalButton";
 
-export function DirectorButtons({role, contract}) {
+export function DirectorButtons({role, contract, proposals}) {
 	if (role !== "Director") {
 		return <></>;
 	}
@@ -12,6 +12,8 @@ export function DirectorButtons({role, contract}) {
 		<div>
 			<AddStuffButton contract_ = {contract}/>
 			<RemoveStuffButton contract_ = {contract}/>
+			<CreateProposalButton contract = {contract}/>
+
 		</div>
 	);
 

@@ -12,6 +12,8 @@ import { Loading } from "./Loading";
 import { NoTokensMessage } from "./NoTokensMessage";
 import { DirectorButtons } from "./DirectorButtons";
 import { StuffInfo } from "./StuffInfo";
+import { ProposalsInfo } from "./ProposalsInfo";
+console.log("ABI: ", DaoArtifact.abi);
 
 
 let provider;
@@ -26,8 +28,9 @@ export function Dapp() {
 	// Hooks
 	const [loading, setLoading] = useState(true);
     const [token, setToken] = useState({_name: "", _role : ""});
-	const [contract, setContract] = useState(null);
 	const [stuff, setStuff] = useState([]);
+	const [contractInstance, setContract] = useState(null);
+	const [proposals, setProposals] = useState([]);
 	let addresses = [];
 	let _address;
 
@@ -46,9 +49,11 @@ export function Dapp() {
         	    console.log("Successfully fetched contract with address: ", contractAddress.DaoAddress);
 
         	    signedContract = DaoContract.connect(signer);
+				setContract(signedContract);
 				_address = await signer.getAddress();
         	    console.log("Successfully signed contract with user address: ", _address);
 				await updateAllStuff();
+				await updateAllProposals();
 			}
 
 			function findAddress(arr, address) {
@@ -76,6 +81,7 @@ export function Dapp() {
 
 		}
 			setInterval(updateAllStuff, 5000);
+			setInterval(updateAllProposals, 5000);
 			fetchData();
 			setLoading(false);
 	}, []);
@@ -96,13 +102,12 @@ export function Dapp() {
 			<h1 className="text-center">Decentralized autonomous organization dApp</h1>
 			<h2 className="text-center"> Token owner: {token._name}, role: {token._role}</h2>
 			<h3 className="text-center"> Owner address: {_address}</h3>			
-			<DirectorButtons role = {token._role} contract = {signedContract} />
+			<DirectorButtons role = {token._role} contract = {signedContract} proposals = { proposals } />
 			<StuffInfo stuff = {stuff}/>
+			<ProposalsInfo proposals = {proposals} executeClick = { (index) => { signedContract.executeProposal(index) }}/>
         </div>
     );
 
-
-	// Testing functions
 	async function updateAllStuff() {
 		addresses = await signedContract.getEmployees();
 		if (addresses.length > stuff.length) {
@@ -112,6 +117,18 @@ export function Dapp() {
 				emptyArray.push({name : worker[0], role : worker[1]});
 			}
 			setStuff(emptyArray);	
+		}
+	}
+
+	async function updateAllProposals() {
+		if (proposals === undefined ) {
+			proposals = await signedContract.getProposals();
+			return;
+		}
+		let new_proposals = await signedContract.getProposals();
+		if (new_proposals.length > proposals.length) {
+				setProposals(new_proposals);
+			
 		}
 	}
 }

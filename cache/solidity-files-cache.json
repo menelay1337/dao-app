@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/murat/final_project/contracts/Dao.sol": {
-      "lastModificationDate": 1709146691663,
-      "contentHash": "d8826292b94d78beda6acb8c376b9a84",
+      "lastModificationDate": 1709153557496,
+      "contentHash": "4effd4a6513a8f2adc7afb6c1addbbe9",
       "sourceName": "contracts/Dao.sol",
       "solcConfig": {
         "version": "0.8.24",
@@ -41,8 +41,8 @@
       ]
     },
     "/home/murat/final_project/contracts/DaoNFT.sol": {
-      "lastModificationDate": 1709146777326,
-      "contentHash": "5a1c20483e43b015a49d007d00b08eb5",
+      "lastModificationDate": 1709153325857,
+      "contentHash": "8d874cd50f12d50f4e21b68226f9ee96",
       "sourceName": "contracts/DaoNFT.sol",
       "solcConfig": {
         "version": "0.8.24",
