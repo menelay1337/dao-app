@@ -53,10 +53,6 @@ contract DaoNFT is ERC721, Ownable {
 		stuffTokens[employee_] = employee("", "", address(0), 0);
 	}
 
-
-	
-
-
 }
 
 

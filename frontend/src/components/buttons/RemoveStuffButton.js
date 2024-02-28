@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function RemoveStuffButton({contract}) {
+export function RemoveStuffButton({contract_}) {
 	const [address, setAddress] = useState('');
 	const handleChange = (event) => {
 		setAddress(event.target.value);
@@ -9,7 +9,7 @@ export function RemoveStuffButton({contract}) {
 		event.preventDefault();
 		// Call the onRemove function passed from the parent component
 		// and pass the address as an argument
-		contract.removeStuff(address);
+		contract_.removeStuff(address);
 		// Reset the address field after submission
 		setAddress('');
 	};
