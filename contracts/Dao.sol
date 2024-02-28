@@ -63,15 +63,15 @@ contract Dao {
     function removeStuff(address _employee) public {
 		require(msg.sender == director, "You're not permitted to remove staff.");
 		Tokens.removeStuff(_employee);
-		for ( uint i = 0; i < stuff.length; i++ ) {
+		 for (uint256 i = 0; i < stuff.length; i++) {
 			if (stuff[i] == _employee) {
-				for ( uint j = i; j < stuff.length; j++ ) {
-					stuff[j] = stuff[j+1];
-				}
-				stuff.pop();
-			}
+        	    // Swap the employee to be removed with the last employee in the array
+        	    stuff[i] = stuff[stuff.length - 1];
+        	    // Remove the last employee from the array
+        	    stuff.pop();
+        	    break; // Exit the loop once the employee is found and removed
+        	}
 		}
-
 		
     }
 
