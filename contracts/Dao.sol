@@ -108,6 +108,9 @@ contract Dao {
 		}
 		return false;
 	}
+  function getVoteResults(uint _proposalId) public view returns (uint votefor, uint voteagainst) {
+        return (proposals[_proposalId].votefor, proposals[_proposalId].voteagainst);
+    }
 
 	function compareStrings(string memory a, string memory b) internal pure returns (bool) {
 	    // Compare the lengths of the strings
