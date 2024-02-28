@@ -1,37 +1,23 @@
-export function DirectorButtons({role, contract}) {
-	const [address, setAddress] = useState('');
-	const handleChange = (event) => {
-		setAddress(event.target.value);
-	};
-	const handleSubmit = (event) => {
-		event.preventDefault();
-    	// Call the onRemove function passed from the parent component
-    	// and pass the address as an argument
-    	contract.removeStuff(address);
-    	// Reset the address field after submission
-    	setAddress('');
-  };
+import { RemoveStuffButton } from "./buttons/RemoveStuffButton";
+import { AddStuffButton } from "./buttons/AddStuffButton";
+import { ShowButton } from "./buttons/ShowButton";
+import DaoArtifact from "../contracts/Dao.json";
 
-
-
-	if (role == "Director") {
-		return (
-			<div>
-				<form onSubmit={handlerSubmit}>
-					<div>
-						<label htmlFor="address">Address:</label>
-						<input
-							type="text"
-							id="address"
-							value={address}
-							onChange={handleChange}
-							required
-						/>
-					</div>
-    			  <button type="submit">Remove Stuff</button>
-    			</form>
-
-			</div>
-		);
+export function DirectorButtons({role, contract, address}) {
+	if (role !== "Director") {
+		return <></>;
 	}
+	console.log("Contract in director's buttons: ", contract);
+	const data = contract.getEmployee(address);
+	console.log("get address of the employee with address: ", address, "\n", data[0], data[1]);
+
+	
+	return (
+		<div>
+			<AddStuffButton contract = {contract}/>
+			<RemoveStuffButton contract = {contract}/>
+		</div>
+	);
+
+
 }

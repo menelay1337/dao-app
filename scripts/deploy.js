@@ -9,32 +9,32 @@ let DaoNFT_contract;
 let Dao_contract;
 let delployer;
 async function main() {
-	[deployer] = await ethers.getSigners();
-	console.log(
-  	  "Deploying the contracts with the account:",
-  	  await deployer.getAddress()
-  	);
-
-
-
-	const name = "Dao";
-	const symbol = "DFT";
-
-	const DaoNFT_factory = await ethers.getContractFactory("DaoNFT");
-	DaoNFT_contract = await DaoNFT_factory.deploy(name, symbol);
-	await DaoNFT_contract.deployed();
-
+	try {
+	    [deployer] = await ethers.getSigners();
 	
-	console.log('DaoNFT deployed to:', DaoNFT_contract.address);
+	    console.log(
+	        "Deploying the contracts with the account:",
+	        await deployer.getAddress()
+	    );
 	
-	const Dao_factory = await ethers.getContractFactory('Dao');
-	// pass contractA constructor the address where contractB was just deployed
-	Dao_contract = await Dao_factory.deploy(DaoNFT_contract.address);
-	await Dao_contract.deployed();
+	    const name = "Dao";
+	    const symbol = "DFT";
 	
-	console.log('Dao deployed to:', Dao_contract.address);
-	saveFrontendFiles();
-
+	    const DaoNFT_factory = await ethers.getContractFactory("DaoNFT");
+	    DaoNFT_contract = await DaoNFT_factory.connect(deployer).deploy(name, symbol);
+	    await DaoNFT_contract.deployed();
+	
+	    console.log('DaoNFT deployed to:', DaoNFT_contract.address);
+	
+	    const Dao_factory = await ethers.getContractFactory('Dao');
+	    Dao_contract = await Dao_factory.connect(deployer).deploy(DaoNFT_contract.address);
+	    await Dao_contract.deployed();
+	
+	    console.log('Dao deployed to:', Dao_contract.address);
+	    saveFrontendFiles();
+	} catch (error) {
+	    console.error("Error deploying contracts:", error);
+	}
 }
 
 function saveFrontendFiles() {

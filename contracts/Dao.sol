@@ -1,18 +1,23 @@
 pragma solidity ^0.8.24;
 import "./DaoNFT.sol";
+import "hardhat/console.sol";
 
 contract Dao {
 	
 	DaoNFT public Tokens;
+	address director;
 
 	constructor(address _address) {
+		console.log("Dao deployer's address:", msg.sender);
 		Tokens = DaoNFT(_address);
+		director = msg.sender;
 		addStuff(msg.sender, "Murat", "Director");
 	}
 
 	function getEmployee(address _address) public view returns (string memory, string memory) {
 		return (Tokens.getEmployeeName(_address), Tokens.getEmployeeRole(_address));
 	}
+
 
     struct Proposal {
         string desc;
@@ -23,6 +28,10 @@ contract Dao {
     }
 
 	address[] public stuff;
+
+	function getEmployees() public view returns(address[] memory){
+		return stuff;
+	}
     mapping(address => mapping(uint => bool)) public votes;
     Proposal[] public proposals;
 
@@ -44,6 +53,7 @@ contract Dao {
        // members.push(_member);
        // balances[_member] = 100;
        // totalSupply += 100;
+	   require(msg.sender == director, "Not enough permission.");
 	   Tokens.setTokenForStaff(_address, employeeName, employeeRole);
 	   stuff.push(_address);
 
@@ -51,6 +61,7 @@ contract Dao {
     }
 
     function removeStuff(address _employee) public {
+		require(msg.sender == director, "You're not permitted to remove staff.");
 		Tokens.removeStuff(_employee);
 		for ( uint i = 0; i < stuff.length; i++ ) {
 			if (stuff[i] == _employee) {
