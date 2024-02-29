@@ -13,6 +13,9 @@ import { NoTokensMessage } from "./NoTokensMessage";
 import { DirectorButtons } from "./DirectorButtons";
 import { StuffInfo } from "./StuffInfo";
 import { ProposalsInfo } from "./ProposalsInfo";
+import { Background } from './background';
+import HalfWindow from './onbackgorund';
+
 console.log("ABI: ", DaoArtifact.abi);
 
 
@@ -98,14 +101,22 @@ export function Dapp() {
 
 
     return (
-        <div>
-			<h1 className="text-center">Decentralized autonomous organization dApp</h1>
-			<h2 className="text-center"> Token owner: {token._name}, role: {token._role}</h2>
-			<h3 className="text-center"> Owner address: {_address}</h3>			
-			<DirectorButtons role = {token._role} contract = {signedContract}/>
+		//Halfwindow first = left side. Info = between, second = right
+		<Background item={<HalfWindow first={
+			<ProposalsInfo proposals = {proposals}  />
+	
+		   } info = {
 			<StuffInfo stuff = {stuff}/>
-			<ProposalsInfo proposals = {proposals}/>
-        </div>
+	
+		   } second={
+			<div>
+				<h2 className="text-center"> Token owner: {token._name}, role: {token._role}</h2>
+				<h3 className="text-center"> Owner address: {_address}</h3>			
+				<DirectorButtons role = {token._role} contract = {signedContract}/>
+				<StuffInfo stuff = {stuff}/>
+			</div>
+		     }
+		/> } />
     );
 
 	async function updateToken() {

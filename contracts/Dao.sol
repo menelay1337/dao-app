@@ -35,6 +35,9 @@ contract Dao {
     mapping(address => mapping(uint => bool)) public votes;
     Proposal[] public proposals;
 
+	function getProposals() public view returns (Proposal[] memory) {
+        return proposals;
+    }
 	function getRoles(uint256 _proposalId) public view returns (string[] memory) {
 	    Proposal storage proposal = proposals[_proposalId];
 	    
@@ -81,10 +84,6 @@ contract Dao {
         emit ProposalCreated(proposals.length - 1, _desc, _roles);
     }
 
-	function getProposals() public view returns(Proposal[] memory) {
-		return proposals;
-	}
-
     function votefor(uint _proposalId) public {
         require(Tokens.getEmployeeAddress(msg.sender) == msg.sender, "Only stuff can vote");
         require(votes[msg.sender][_proposalId] == false, "You have already voted for this proposal");
@@ -113,6 +112,9 @@ contract Dao {
 		}
 		return false;
 	}
+  function getVoteResults(uint _proposalId) public view returns (uint votefor, uint voteagainst) {
+        return (proposals[_proposalId].votefor, proposals[_proposalId].voteagainst);
+    }
 
 	function compareStrings(string memory a, string memory b) internal pure returns (bool) {
 	    // Compare the lengths of the strings

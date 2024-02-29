@@ -1,7 +1,10 @@
 import React from "react";
+import { Background } from "./background";
+
 
 export function NoTokensMessage({address}) {
   return (
+   <Background item={
     <>
 	  <h1 className="text-center">Decentralized autonomous organization dApp</h1>
       <p className="text-center">Your address: {address}</p>
@@ -12,5 +15,6 @@ export function NoTokensMessage({address}) {
         <br />
       </p>
     </>
+   }></Background>
   );
 }
