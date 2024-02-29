@@ -1,6 +1,5 @@
 pragma solidity ^0.8.24;
 import "./DaoNFT.sol";
-import "hardhat/console.sol";
 
 contract Dao {
 	
@@ -8,7 +7,6 @@ contract Dao {
 	address director;
 
 	constructor(address _address) {
-		console.log("Dao deployer's address:", msg.sender);
 		Tokens = DaoNFT(_address);
 		director = msg.sender;
 		addStuff(msg.sender, "Murat", "Director");

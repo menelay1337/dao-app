@@ -3,7 +3,6 @@ pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "hardhat/console.sol";
 
 contract DaoNFT is ERC721, Ownable {
 	// metadata
@@ -33,7 +32,6 @@ contract DaoNFT is ERC721, Ownable {
 
 
 	constructor(string memory DAOname, string memory symbol) ERC721(DAOname, symbol) Ownable(msg.sender) {
-		console.log("Deploying DaoNFT contract with address: ", msg.sender);
 	}
 
 	function setTokenForStaff(address employeeAddress_, string memory _name, string memory _role) public {

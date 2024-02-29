@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/murat/final_project/contracts/Dao.sol": {
-      "lastModificationDate": 1709195856266,
-      "contentHash": "421c031b9cb2aa1f0989856eaf8c97c9",
+      "lastModificationDate": 1709196779479,
+      "contentHash": "bfe6ceec223b997d9a0c2a2440a45eac",
       "sourceName": "contracts/Dao.sol",
       "solcConfig": {
         "version": "0.8.24",
@@ -30,8 +30,7 @@
         }
       },
       "imports": [
-        "./DaoNFT.sol",
-        "hardhat/console.sol"
+        "./DaoNFT.sol"
       ],
       "versionPragmas": [
         "^0.8.24"
@@ -41,8 +40,8 @@
       ]
     },
     "/home/murat/final_project/contracts/DaoNFT.sol": {
-      "lastModificationDate": 1709153325857,
-      "contentHash": "8d874cd50f12d50f4e21b68226f9ee96",
+      "lastModificationDate": 1709196792792,
+      "contentHash": "ac7442b76d550f54d21458fdffd3eeea",
       "sourceName": "contracts/DaoNFT.sol",
       "solcConfig": {
         "version": "0.8.24",
@@ -70,8 +69,7 @@
       },
       "imports": [
         "@openzeppelin/contracts/token/ERC721/ERC721.sol",
-        "@openzeppelin/contracts/access/Ownable.sol",
-        "hardhat/console.sol"
+        "@openzeppelin/contracts/access/Ownable.sol"
       ],
       "versionPragmas": [
         "^0.8.24"
