@@ -6,7 +6,7 @@ import { Toasts } from './cards';
 
   
 
-export const Background = () => {
+export const Background = (props) => {
    
   
     const containerStyle = {
@@ -32,9 +32,7 @@ export const Background = () => {
     
       <Container fluid style={containerStyle}>
         <h1>Deep Ocean</h1>
-          <HalfWindow first={<Toasts/>} second={<VoteDiagram data={[1,2]}></VoteDiagram>}>
-          </HalfWindow>
-          
+        {props.item}
       </Container>
 
     </>

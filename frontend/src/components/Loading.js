@@ -1,7 +1,8 @@
 import React from "react";
-
+import { Background } from "./background";
 export function Loading() {
   return (
+    <Background>
     <div
       style={{
         position: "fixed",
@@ -31,5 +32,6 @@ export function Loading() {
         </div>
       </div>
     </div>
+    </Background>
   );
 }

@@ -11,6 +11,9 @@ import { NoWalletDetected } from "./NoWalletDetected";
 import { Loading } from "./Loading";
 import { NoTokensMessage } from "./NoTokensMessage";
 import { DirectorButtons } from "./DirectorButtons";
+import { Background } from './background';
+import HalfWindow from './onbackgorund';
+import { Toasts } from './cards';
 
 console.log("Dao abi: ", DaoArtifact.abi);
 
@@ -47,7 +50,9 @@ export function Dapp() {
 			signerAddress = await signer.getAddress();
 			setAddress(signerAddress);
             console.log("Successfully signed contract with user address: ", signerAddress);
-			
+			//
+			// const objtest =await signedContract.getProposals()
+			// console.log(objtest+"success")			
 			// update Token info 
 			const argArray = await signedContract.getEmployee(signerAddress);
 			let name = argArray[0];
@@ -77,13 +82,16 @@ export function Dapp() {
 
 
     return (
-        <div>
-			<h1 className="text-center">Decentralized autonomous organization dApp</h1>
+		<Background 
+		item={<HalfWindow first={<Toasts/>} second={
+		<div>	
 			<h2 className="text-center"> Token owner: {token._name}, role: {token._role}</h2>
 			<h3 className="text-center"> Owner address: {_address}</h3>			
 			<DirectorButtons role = {token._role} contract = {signedContract} address = {signerAddress}/>
-
-        </div>
+	</div>
+}/>}>
+       
+			</Background>
     );
 
 
