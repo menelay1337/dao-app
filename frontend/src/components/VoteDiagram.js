@@ -27,8 +27,7 @@ export function VoteDiagram(props) {
               'rgba(255, 159, 64, 1)',
             ],
             options: {
-                responsive: false, // Set to false to disable automatic resizing
-                maintainAspectRatio: false, // Set to false to allow stretching of the chart
+              responsive: true
                 // other options...
             },
             borderWidth: 1,

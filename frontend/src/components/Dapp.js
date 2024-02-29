@@ -1,40 +1,11 @@
-// Import ethers.js library 
-// and metadata
-import { ethers } from 'ethers';
-import contractAddress from "../contracts/dao-contract-address.json";
-import DaoArtifact from "../contracts/Dao.json";
-import { deployer } from "../contracts/deployer-address.json";
-
-// UI
-import React, { useState, useEffect} from "react";
-import { NoWalletDetected } from "./NoWalletDetected";
-import { Loading } from "./Loading";
-import { NoTokensMessage } from "./NoTokensMessage";
-import { DirectorButtons } from "./DirectorButtons";
-
-import { Background } from './background';
-import HalfWindow from './onbackgorund';
-import { Toasts } from './cards';
-import { StuffInfo } from "./StuffInfo";
-import { ProposalsInfo } from "./ProposalsInfo";
-console.log("ABI: ", DaoArtifact.abi);
-let provider;
-let signer;
-let signerAddress;
-
-//Contract instances 
-let DaoContract;
-let signedContract;
-
-export function Dapp() {
-	// Hooks
-	const [loading, setLoading] = useState(true);
+const [loading, setLoading] = useState(true);
     const [token, setToken] = useState({_name: "", _role : ""});
 	const [stuff, setStuff] = useState([]);
 	const [contractInstance, setContract] = useState(null);
 	const [proposals, setProposals] = useState([]);
+	const [_address, setAddress] = useState("");
 	let addresses = [];
-	let _address;
+	let signedAddress;
 
 	// automatic connection to wallet
 	useEffect(() => {
@@ -50,15 +21,26 @@ export function Dapp() {
         	    DaoContract = new ethers.Contract(contractAddress.DaoAddress, DaoArtifact.abi, provider);
         	    console.log("Successfully fetched contract with address: ", contractAddress.DaoAddress);
 
-            signedContract = DaoContract.connect(signer);
-			signerAddress = await signer.getAddress();
-			setAddress(signerAddress);
-            console.log("Successfully signed contract with user address: ", signerAddress);
+        	    signedContract = DaoContract.connect(signer);
+				setContract(signedContract);
+				signedAddress = await signer.getAddress();
+        	    console.log("Successfully signed contract with user address: ", signedAddress);
+			}
+
+			function findAddress(arr, address) {
+				for(let i = 0; i < arr.length; i++ ){
+					if (address === arr[i]) {
+						return true;
+					}
+				}
+				return false;
+			}
+			await updateAllStuff();
+			await updateAllProposals();
 			
 			// update Token info 
-			if (addresses !== undefined && findAddress(addresses, _address)) {
-
-				const argArray = await signedContract.getEmployee(_address);
+			if (addresses !== undefined && findAddress(addresses, signedAddress)) {
+				const argArray = await signedContract.getEmployee(signedAddress);
 				let name = argArray[0];
 				let role = argArray[1];
 				setToken((prevState) => ({
@@ -68,8 +50,9 @@ export function Dapp() {
         		}));
 				stuff.push({name: name, role: role});
 			}
-
+			setAddress(signedAddress);
 		}
+			setInterval(updateToken, 5000);
 			setInterval(updateAllStuff, 5000);
 			setInterval(updateAllProposals, 5000);
 			fetchData();
@@ -88,15 +71,24 @@ export function Dapp() {
 
 
     return (
-		<Background 
-		item={<HalfWindow first={<Toasts/>} second={
-		<div>	
-			<h2 className="text-center"> Token owner: {token._name}, role: {token._role}</h2>
-			<h3 className="text-center"> Owner address: {_address}</h3>			
-			<DirectorButtons role = {token._role} contract = {signedContract} address = {signerAddress}/>
+		
+       <Background item={<HalfWindow first={
+		<ProposalsInfo proposals = {proposals} executeClick = { (index) => { signedContract.executeProposal(index) }}/>
 
-        </div>
+	   } info={
+		<StuffInfo stuff = {stuff}/>
+
+	   } second={
+		<div>
+		<h2 className="text-center"> Token owner: {token._name}, role: {token._role}</h2>
+		<h3 className="text-center"> Owner address: {_address}</h3>			
+		<DirectorButtons role = {token._role} contract = {signedContract} proposals = { proposals } />
+	</div>
+	   } />}/>
     );
+	async function updateToken() {
+		return;	
+	}
 
 	async function updateAllStuff() {
 		addresses = await signedContract.getEmployees();
@@ -121,4 +113,3 @@ export function Dapp() {
 			
 		}
 	}
-}

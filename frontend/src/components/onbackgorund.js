@@ -26,6 +26,9 @@ const HalfWindow = (props) => {
         <Col lg={4} style={leftcontent}>
           {props.first}
         </Col>
+        <Col>
+        {props.info}
+</Col>
         {/* Right content takes up 6 columns on larger screens */}
         <Col lg={6} style={leftcontent}>
           <Row><h1 className="text-center">Decentralized autonomous organization dApp</h1></Row>
@@ -33,9 +36,9 @@ const HalfWindow = (props) => {
             <Col>
               {/* Button to toggle diagram */}
               <Row>
-                <Button onClick={toggleDiagram}>
+                {/* <Button onClick={toggleDiagram}>
                   {showDiagram ? "Close Diagram" : "Show Diagram"}
-                </Button>
+                </Button> */}
               </Row>
               {/* Conditionally render diagram based on showDiagram state */}
 
