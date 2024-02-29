@@ -103,7 +103,7 @@ export function Dapp() {
     return (
 		//Halfwindow first = left side. Info = between, second = right
 		<Background item={<HalfWindow first={
-			<ProposalsInfo proposals = {proposals}  />
+			<ProposalsInfo proposals = {proposals} contract = {signedContract} />
 	
 		   } info = {
 			<StuffInfo stuff = {stuff}/>
@@ -113,7 +113,6 @@ export function Dapp() {
 				<h2 className="text-center"> Token owner: {token._name}, role: {token._role}</h2>
 				<h3 className="text-center"> Owner address: {_address}</h3>			
 				<DirectorButtons role = {token._role} contract = {signedContract}/>
-				<StuffInfo stuff = {stuff}/>
 			</div>
 		     }
 		/> } />

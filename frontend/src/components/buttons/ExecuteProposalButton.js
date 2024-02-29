@@ -20,7 +20,6 @@ export function ExecuteProposalButton(contract_) {
 						type="id"
 						id="id"
 						name="id"
-						value={""}
 						onChange={handleChange}
 						required
 					/> <br/>
