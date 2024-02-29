@@ -2,7 +2,6 @@ import React from 'react';
 import {Container} from 'react-bootstrap';
 import { VoteDiagram } from './VoteDiagram';
 import HalfWindow from './onbackgorund';
-import { Toasts } from './cards';
 
   
 

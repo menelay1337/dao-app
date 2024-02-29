@@ -1,4 +1,35 @@
-const [loading, setLoading] = useState(true);
+// Import ethers.js library 
+// and metadata
+import { ethers } from 'ethers';
+import contractAddress from "../contracts/dao-contract-address.json";
+import DaoArtifact from "../contracts/Dao.json";
+import { deployer } from "../contracts/deployer-address.json";
+
+// UI
+import React, { useState, useEffect} from "react";
+import { NoWalletDetected } from "./NoWalletDetected";
+import { Loading } from "./Loading";
+import { NoTokensMessage } from "./NoTokensMessage";
+import { DirectorButtons } from "./DirectorButtons";
+import { StuffInfo } from "./StuffInfo";
+import { ProposalsInfo } from "./ProposalsInfo";
+import { Background } from './background';
+import HalfWindow from './onbackgorund';
+
+console.log("ABI: ", DaoArtifact.abi);
+
+
+let provider;
+let signer;
+let signerAddress;
+
+//Contract instances 
+let DaoContract;
+let signedContract;
+
+export function Dapp() {
+	// Hooks
+	const [loading, setLoading] = useState(true);
     const [token, setToken] = useState({_name: "", _role : ""});
 	const [stuff, setStuff] = useState([]);
 	const [contractInstance, setContract] = useState(null);
@@ -71,21 +102,22 @@ const [loading, setLoading] = useState(true);
 
 
     return (
-		
-       <Background item={<HalfWindow first={
-		<ProposalsInfo proposals = {proposals} executeClick = { (index) => { signedContract.executeProposal(index) }}/>
-
-	   } info={
-		<StuffInfo stuff = {stuff}/>
-
-	   } second={
-		<div>
-		<h2 className="text-center"> Token owner: {token._name}, role: {token._role}</h2>
-		<h3 className="text-center"> Owner address: {_address}</h3>			
-		<DirectorButtons role = {token._role} contract = {signedContract} proposals = { proposals } />
-	</div>
-	   } />}/>
+		//Halfwindow first = left side. Info = between, second = right
+		<Background item={<HalfWindow first={
+			<ProposalsInfo proposals = {proposals} executeClick = { (index) => { signedContract.executeProposal(index) }}/>
+	
+		   } info={
+			<StuffInfo stuff = {stuff}/>
+	
+		   } second={
+			<div>
+			<h2 className="text-center"> Token owner: {token._name}, role: {token._role}</h2>
+			<h3 className="text-center"> Owner address: {_address}</h3>			
+			<DirectorButtons role = {token._role} contract = {signedContract} proposals = { proposals } />
+		</div>
+		   } />}/>
     );
+
 	async function updateToken() {
 		return;	
 	}
@@ -113,3 +145,4 @@ const [loading, setLoading] = useState(true);
 			
 		}
 	}
+}
