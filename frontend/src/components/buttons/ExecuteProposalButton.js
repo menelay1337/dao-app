@@ -1,11 +1,9 @@
 import { useState } from "react";
-export function ExecuteProposalButton(contract_) {	
+export function ExecuteProposalButton({ contract_ }) {	
 		const [id, setId] = useState(0);
 		const handleChange = (event) => {
 			setId(event.target);
     	};
-		
-		
 
 		const handleSubmit = async (event) => {
 			event.preventDefault();
