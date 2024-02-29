@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { RemoveStuffButton } from "./buttons/RemoveStuffButton";
 import { AddStuffButton } from "./buttons/AddStuffButton";
 import { CreateProposalButton } from "./buttons/CreateProposalButton";
+import { ExecuteProposalButton } from "./buttons/ExecuteProposalButton";
 
-export function DirectorButtons({role, contract, proposals}) {
+export function DirectorButtons({role, contract}) {
 	if (role !== "Director") {
 		return <></>;
 	}
@@ -12,8 +13,8 @@ export function DirectorButtons({role, contract, proposals}) {
 		<div>
 			<AddStuffButton contract_ = {contract}/>
 			<RemoveStuffButton contract_ = {contract}/>
-			<CreateProposalButton contract = {contract}/>
-
+			<CreateProposalButton contract_ = {contract}/>
+			<ExecuteProposalButton contract_ = {contract}/>
 		</div>
 	);
 

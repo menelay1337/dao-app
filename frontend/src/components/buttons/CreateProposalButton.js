@@ -1,7 +1,6 @@
 import { useState } from "react";
-export function CreateProposalButton(contract) {
-
-	const Contract = contract.contract;
+export function CreateProposalButton(contract_) {
+	const Contract = contract_.contract_;
 	const [ desc, setDesc ] = useState("");
 	let roles = [];
 	const handleChange = (event) => {

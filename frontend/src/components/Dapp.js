@@ -80,7 +80,6 @@ export function Dapp() {
 			}
 			setAddress(signedAddress);
 		}
-			setInterval(updateToken, 5000);
 			setInterval(updateAllStuff, 5000);
 			setInterval(updateAllProposals, 5000);
 			fetchData();
@@ -103,9 +102,9 @@ export function Dapp() {
 			<h1 className="text-center">Decentralized autonomous organization dApp</h1>
 			<h2 className="text-center"> Token owner: {token._name}, role: {token._role}</h2>
 			<h3 className="text-center"> Owner address: {_address}</h3>			
-			<DirectorButtons role = {token._role} contract = {signedContract} proposals = { proposals } />
+			<DirectorButtons role = {token._role} contract = {signedContract}/>
 			<StuffInfo stuff = {stuff}/>
-			<ProposalsInfo proposals = {proposals} executeClick = { (index) =>  signedContract.executeProposal(index) }/>
+			<ProposalsInfo proposals = {proposals}/>
         </div>
     );
 
