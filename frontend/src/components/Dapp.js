@@ -31,8 +31,8 @@ export function Dapp() {
 	const [stuff, setStuff] = useState([]);
 	const [contractInstance, setContract] = useState(null);
 	const [proposals, setProposals] = useState([]);
+	const [_address, setAddress] = useState("");
 	let addresses = [];
-	let _address;
 
 	// automatic connection to wallet
 	useEffect(() => {
@@ -50,10 +50,11 @@ export function Dapp() {
 
         	    signedContract = DaoContract.connect(signer);
 				setContract(signedContract);
-				_address = await signer.getAddress();
-        	    console.log("Successfully signed contract with user address: ", _address);
+				let signedAddress = await signer.getAddress();
+        	    console.log("Successfully signed contract with user address: ", signedAddress);
 				await updateAllStuff();
 				await updateAllProposals();
+				setAddress(signedAddress);
 			}
 
 			function findAddress(arr, address) {
@@ -104,7 +105,7 @@ export function Dapp() {
 			<h3 className="text-center"> Owner address: {_address}</h3>			
 			<DirectorButtons role = {token._role} contract = {signedContract} proposals = { proposals } />
 			<StuffInfo stuff = {stuff}/>
-			<ProposalsInfo proposals = {proposals} executeClick = { (index) => { signedContract.executeProposal(index) }}/>
+			<ProposalsInfo proposals = {proposals} executeClick = { (index) =>  signedContract.executeProposal(index) }/>
         </div>
     );
 
