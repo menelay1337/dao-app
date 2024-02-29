@@ -33,6 +33,7 @@ export function Dapp() {
 	const [proposals, setProposals] = useState([]);
 	const [_address, setAddress] = useState("");
 	let addresses = [];
+	let signedAddress;
 
 	// automatic connection to wallet
 	useEffect(() => {
@@ -50,11 +51,8 @@ export function Dapp() {
 
         	    signedContract = DaoContract.connect(signer);
 				setContract(signedContract);
-				let signedAddress = await signer.getAddress();
+				signedAddress = await signer.getAddress();
         	    console.log("Successfully signed contract with user address: ", signedAddress);
-				await updateAllStuff();
-				await updateAllProposals();
-				setAddress(signedAddress);
 			}
 
 			function findAddress(arr, address) {
@@ -65,11 +63,12 @@ export function Dapp() {
 				}
 				return false;
 			}
+			await updateAllStuff();
+			await updateAllProposals();
 			
 			// update Token info 
-			if (addresses !== undefined && findAddress(addresses, _address)) {
-
-				const argArray = await signedContract.getEmployee(_address);
+			if (addresses !== undefined && findAddress(addresses, signedAddress)) {
+				const argArray = await signedContract.getEmployee(signedAddress);
 				let name = argArray[0];
 				let role = argArray[1];
 				setToken((prevState) => ({
@@ -79,8 +78,9 @@ export function Dapp() {
         		}));
 				stuff.push({name: name, role: role});
 			}
-
+			setAddress(signedAddress);
 		}
+			setInterval(updateToken, 5000);
 			setInterval(updateAllStuff, 5000);
 			setInterval(updateAllProposals, 5000);
 			fetchData();
@@ -108,6 +108,10 @@ export function Dapp() {
 			<ProposalsInfo proposals = {proposals} executeClick = { (index) =>  signedContract.executeProposal(index) }/>
         </div>
     );
+
+	async function updateToken() {
+		return;	
+	}
 
 	async function updateAllStuff() {
 		addresses = await signedContract.getEmployees();
