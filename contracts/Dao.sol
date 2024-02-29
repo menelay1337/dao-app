@@ -34,7 +34,9 @@ contract Dao {
 	}
     mapping(address => mapping(uint => bool)) public votes;
     Proposal[] public proposals;
-
+  function getProposals() public view returns (Proposal[] memory) {
+        return proposals;
+    }
 	function getRoles(uint256 _proposalId) public view returns (string[] memory) {
 	    Proposal storage proposal = proposals[_proposalId];
 	    
