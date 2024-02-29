@@ -142,7 +142,6 @@ export function Dapp() {
 		let new_proposals = await signedContract.getProposals();
 		if (new_proposals.length > proposals.length) {
 				setProposals(new_proposals);
-			
 		}
 	}
 }

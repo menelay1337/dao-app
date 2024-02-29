@@ -85,7 +85,7 @@ contract Dao {
     function votefor(uint _proposalId) public {
         require(Tokens.getEmployeeAddress(msg.sender) == msg.sender, "Only stuff can vote");
         require(votes[msg.sender][_proposalId] == false, "You have already voted for this proposal");
-		require(isSuitable(msg.sender, _proposalId), "You're not pertmitted to vote.");
+		//require(isSuitable(msg.sender, _proposalId), "You're not pertmitted to vote.");
         votes[msg.sender][_proposalId] = true;
         proposals[_proposalId].votefor += 1;
         emit VoteCast(msg.sender, _proposalId, "for");
@@ -94,7 +94,7 @@ contract Dao {
     function voteagainst(uint _proposalId) public {
         require(Tokens.getEmployeeAddress(msg.sender) == msg.sender, "Only members can vote");
         require(votes[msg.sender][_proposalId] == false, "You have already voted for this proposal");
-		require(isSuitable(msg.sender, _proposalId), "You're not pertmitted to vote.");
+		//require(isSuitable(msg.sender, _proposalId), "You're not pertmitted to vote.");
         votes[msg.sender][_proposalId] = true;
         proposals[_proposalId].voteagainst += 1;
         emit VoteCast(msg.sender, _proposalId, "against");

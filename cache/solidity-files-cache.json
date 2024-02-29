@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/murat/final_project/contracts/Dao.sol": {
-      "lastModificationDate": 1709196779479,
-      "contentHash": "bfe6ceec223b997d9a0c2a2440a45eac",
+      "lastModificationDate": 1709201302785,
+      "contentHash": "b24bbc1db6d1595e513aaf4de7417afc",
       "sourceName": "contracts/Dao.sol",
       "solcConfig": {
         "version": "0.8.24",

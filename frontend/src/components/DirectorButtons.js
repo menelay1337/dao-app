@@ -5,7 +5,6 @@ import { CreateProposalButton } from "./buttons/CreateProposalButton";
 import { ExecuteProposalButton } from "./buttons/ExecuteProposalButton";
 
 export function DirectorButtons({role, contract}) {
-	console.log("Director's contract: ", contract);
 	if (role !== "Director") {
 		return <></>;
 	}
