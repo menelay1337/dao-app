@@ -11,12 +11,13 @@ import { NoWalletDetected } from "./NoWalletDetected";
 import { Loading } from "./Loading";
 import { NoTokensMessage } from "./NoTokensMessage";
 import { DirectorButtons } from "./DirectorButtons";
+
 import { Background } from './background';
 import HalfWindow from './onbackgorund';
 import { Toasts } from './cards';
-
-console.log("Dao abi: ", DaoArtifact.abi);
-
+import { StuffInfo } from "./StuffInfo";
+import { ProposalsInfo } from "./ProposalsInfo";
+console.log("ABI: ", DaoArtifact.abi);
 let provider;
 let signer;
 let signerAddress;
@@ -28,10 +29,12 @@ let signedContract;
 export function Dapp() {
 	// Hooks
 	const [loading, setLoading] = useState(true);
-	const [_address, setAddress] = useState("");
     const [token, setToken] = useState({_name: "", _role : ""});
-	let addresses;
-	let stuff;
+	const [stuff, setStuff] = useState([]);
+	const [contractInstance, setContract] = useState(null);
+	const [proposals, setProposals] = useState([]);
+	let addresses = [];
+	let _address;
 
 	// automatic connection to wallet
 	useEffect(() => {
@@ -40,35 +43,38 @@ export function Dapp() {
 				return <NoWalletDetected />;
     		}
 			// Connect to Hardhat Network or Ethereum Mainnet using provider
-			provider = new ethers.BrowserProvider(window.ethereum)
-			console.log("Successfully obtained Metamask provider");
-			signer = await provider.getSigner();
-            DaoContract = new ethers.Contract(contractAddress.DaoAddress, DaoArtifact.abi, provider);
-            console.log("Successfully fetched contract with address: ", contractAddress.DaoAddress);
+			if (provider === undefined || provider === null ) {
+				provider = new ethers.BrowserProvider(window.ethereum)
+				console.log("Successfully obtained Metamask provider");
+				signer = await provider.getSigner();
+        	    DaoContract = new ethers.Contract(contractAddress.DaoAddress, DaoArtifact.abi, provider);
+        	    console.log("Successfully fetched contract with address: ", contractAddress.DaoAddress);
 
             signedContract = DaoContract.connect(signer);
 			signerAddress = await signer.getAddress();
 			setAddress(signerAddress);
             console.log("Successfully signed contract with user address: ", signerAddress);
-			//
-			// const objtest =await signedContract.getProposals()
-			// console.log(objtest+"success")			
+			
 			// update Token info 
-			const argArray = await signedContract.getEmployee(signerAddress);
-			let name = argArray[0];
-			let role = argArray[1];
-			setToken((prevState) => ({
-			    ...prevState,
-        	    _name: name,
-        	    _role: role,
-        	}));
-			setInterval(await printAllStuff, 5000);
+			if (addresses !== undefined && findAddress(addresses, _address)) {
 
+				const argArray = await signedContract.getEmployee(_address);
+				let name = argArray[0];
+				let role = argArray[1];
+				setToken((prevState) => ({
+				    ...prevState,
+        		    _name: name,
+        		    _role: role,
+        		}));
+				stuff.push({name: name, role: role});
+			}
 
+		}
+			setInterval(updateAllStuff, 5000);
+			setInterval(updateAllProposals, 5000);
+			fetchData();
 			setLoading(false);
-        }
-        fetchData();
-    }, []);
+	}, []);
 
     if (loading) {
         return (<Loading />);
@@ -88,20 +94,31 @@ export function Dapp() {
 			<h2 className="text-center"> Token owner: {token._name}, role: {token._role}</h2>
 			<h3 className="text-center"> Owner address: {_address}</h3>			
 			<DirectorButtons role = {token._role} contract = {signedContract} address = {signerAddress}/>
-	</div>
-}/>}>
-       
-			</Background>
+
+        </div>
     );
 
+	async function updateAllStuff() {
+		addresses = await signedContract.getEmployees();
+		if (addresses.length > stuff.length) {
+			let emptyArray = [];
+			for (let address of addresses) {
+				const worker = await signedContract.getEmployee(address);
+				emptyArray.push({name : worker[0], role : worker[1]});
+			}
+			setStuff(emptyArray);	
+		}
+	}
 
-	// Testing functions
-	async function printAllStuff() {
-		const addresses = await signedContract.getEmployees();
-		for (let address of addresses) {
-			const worker = await signedContract.getEmployee(address);
-			console.log(worker);
-			console.log(worker[0], worker[1]);
+	async function updateAllProposals() {
+		if (proposals === undefined ) {
+			proposals = await signedContract.getProposals();
+			return;
+		}
+		let new_proposals = await signedContract.getProposals();
+		if (new_proposals.length > proposals.length) {
+				setProposals(new_proposals);
+			
 		}
 	}
 }

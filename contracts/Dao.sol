@@ -65,25 +65,30 @@ contract Dao {
     function removeStuff(address _employee) public {
 		require(msg.sender == director, "You're not permitted to remove staff.");
 		Tokens.removeStuff(_employee);
-		for ( uint i = 0; i < stuff.length; i++ ) {
+		 for (uint256 i = 0; i < stuff.length; i++) {
 			if (stuff[i] == _employee) {
-				for ( uint j = i; j < stuff.length; j++ ) {
-					stuff[j] = stuff[j+1];
-				}
-				stuff.pop();
-			}
+        	    // Swap the employee to be removed with the last employee in the array
+        	    stuff[i] = stuff[stuff.length - 1];
+        	    // Remove the last employee from the array
+        	    stuff.pop();
+        	    break; // Exit the loop once the employee is found and removed
+        	}
 		}
-
 		
     }
 
     function createProposal(string memory _desc, string[] memory _roles) public {
+		require(msg.sender == director, "Not enough permission to create proposal");
         proposals.push(Proposal({desc: _desc, votefor: 0, voteagainst: 0, executed: false, roles: _roles}));
         emit ProposalCreated(proposals.length - 1, _desc, _roles);
     }
 
+	function getProposals() public view returns(Proposal[] memory) {
+		return proposals;
+	}
+
     function votefor(uint _proposalId) public {
-        require(Tokens.getEmployeeAddress(msg.sender) == msg.sender, "Only members can vote");
+        require(Tokens.getEmployeeAddress(msg.sender) == msg.sender, "Only stuff can vote");
         require(votes[msg.sender][_proposalId] == false, "You have already voted for this proposal");
 		require(isSuitable(msg.sender, _proposalId), "You're not pertmitted to vote.");
         votes[msg.sender][_proposalId] = true;

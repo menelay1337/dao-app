@@ -1,16 +1,16 @@
 import { useState } from "react";
 
-export function AddStuffButton({contract}) {
-	const [address, setAddress] = useState('');
-	const [name, setName] = useState("");
-	const [role, setRole] = useState("");
+export function AddStuffButton({contract_}) {
+	let address;
+	let name;
+	let role;
 	const handleChange = (event) => {
 		if (event.target.id === "address") {
-			setAddress(event.target.value);
+			address = event.target.value;
 		} else if (event.target.id === "name") {
-			setName(event.target.value);
+			name = event.target.value
 		} else if (event.target.id === "role") {
-			setRole(event.target.value);
+			role = event.target.value;
 		}
 
 	};
@@ -18,11 +18,11 @@ export function AddStuffButton({contract}) {
 		event.preventDefault();
 		// Call the onRemove function passed from the parent component
 		// and pass the address as an argument
-		contract.addStuff(address, name, role);
+		contract_.addStuff(address, name, role);
 		// Reset the address field after submission
-		setAddress('');
-		setRole("");
-		setName("");
+		address = "";
+		name = "";
+		role = "";
 	};
 
 	return (

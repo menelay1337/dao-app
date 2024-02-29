@@ -1,9 +1,9 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "C:\\Users\\hpvic\\OneDrive\\Рабочий стол\\projects\\blockFinal\\dao-app\\contracts\\Dao.sol": {
-      "lastModificationDate": 1709148519598,
-      "contentHash": "ad4594df3893345b9edb77822cd84161",
+    "/home/murat/final_project/contracts/Dao.sol": {
+      "lastModificationDate": 1709139726345,
+      "contentHash": "3b2f93129bfb77c2ff108c391be540c0",
       "sourceName": "contracts/Dao.sol",
       "solcConfig": {
         "version": "0.8.24",
@@ -40,9 +40,9 @@
         "Dao"
       ]
     },
-    "C:\\Users\\hpvic\\OneDrive\\Рабочий стол\\projects\\blockFinal\\dao-app\\contracts\\DaoNFT.sol": {
-      "lastModificationDate": 1709145485468,
-      "contentHash": "1aca30854b5ddce1187084d15f406533",
+    "/home/murat/final_project/contracts/DaoNFT.sol": {
+      "lastModificationDate": 1709139759409,
+      "contentHash": "c050770ce7e9cd0b85e928f86331a845",
       "sourceName": "contracts/DaoNFT.sol",
       "solcConfig": {
         "version": "0.8.24",
@@ -461,10 +461,10 @@
         "IERC721Metadata"
       ]
     },
-    "C:\\Users\\hpvic\\OneDrive\\Рабочий стол\\projects\\blockFinal\\dao-app\\node_modules\\@openzeppelin\\contracts\\utils\\math\\Math.sol": {
-      "lastModificationDate": 1709145508576,
-      "contentHash": "718fa8ba0ff269c92e364c1429d9de57",
-      "sourceName": "@openzeppelin/contracts/utils/math/Math.sol",
+    "/home/murat/final_project/node_modules/@openzeppelin/contracts/utils/math/SignedMath.sol": {
+      "lastModificationDate": 1708876122900,
+      "contentHash": "b6c6bdc7aaca4fe5b680760a72e09d3e",
+      "sourceName": "@openzeppelin/contracts/utils/math/SignedMath.sol",
       "solcConfig": {
         "version": "0.8.24",
         "settings": {
@@ -497,10 +497,10 @@
         "Math"
       ]
     },
-    "C:\\Users\\hpvic\\OneDrive\\Рабочий стол\\projects\\blockFinal\\dao-app\\node_modules\\@openzeppelin\\contracts\\utils\\math\\SignedMath.sol": {
-      "lastModificationDate": 1709145508596,
-      "contentHash": "b6c6bdc7aaca4fe5b680760a72e09d3e",
-      "sourceName": "@openzeppelin/contracts/utils/math/SignedMath.sol",
+    "/home/murat/final_project/node_modules/@openzeppelin/contracts/utils/math/Math.sol": {
+      "lastModificationDate": 1708876122897,
+      "contentHash": "718fa8ba0ff269c92e364c1429d9de57",
+      "sourceName": "@openzeppelin/contracts/utils/math/Math.sol",
       "solcConfig": {
         "version": "0.8.24",
         "settings": {
